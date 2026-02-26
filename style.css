@@ -1,0 +1,20 @@
+/* ===================================
+   EVERYTHING
+   =================================== */
+
+   * {
+    font-family: 'JetBrains Mono', monospace;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+   }
+
+   :root {
+    --link-color: ;
+    --h1-font-size: 2em;
+    --h2-font-size: 1.45em;
+    --h3-font-size: 1.15em;
+    --h4-font-size: 0.8em;
+    --button-radius: 8px;
+    --box-shadow: 0px 4px 6px rbga(0,0,0,0.1);
+   }

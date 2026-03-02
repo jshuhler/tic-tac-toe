@@ -21,15 +21,22 @@ const gameBoard = (function createGameBoard() {
 })();
 
 // PLAYER CREATION
-const createPlayer = function makePlayer(name) {
-    const playerName = name;
+const createPlayer = function makePlayer(name, marker) {
 
-    return { playerName };
+    return { name, marker };
 }
 
 // GAME CONTROLLER
 function gameController() {
-
+    // manually creating two players
+    const playerOne = createPlayer("Player One", "X");
+    const playerTwo = createPlayer("Player Two", "O");
+    const playTurn = (player, row, col) => {
+        let rowLookup = row - 1;
+        let colLookup = col - 1;
+        console.log(gameBoard.board[rowLookup][colLookup])
+    }
+    return { playerOne, playerTwo, playTurn }
 }
 
 // DISPLAY CONTROLLER

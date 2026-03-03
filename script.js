@@ -27,17 +27,27 @@ const createPlayer = function makePlayer(name, marker) {
 }
 
 // GAME CONTROLLER
-function gameController() {
+function gameController(row,col) {
     // manually creating two players
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
-    const playTurn = (player, row, col) => {
-        let rowLookup = row - 1;
-        let colLookup = col - 1;
-        console.log(gameBoard.board[rowLookup][colLookup])
+    let rowLookup = row - 1;
+    let colLookup = col - 1;
+    const playTurn = (player, rowLookup, colLookup, board) => {
+
+
+        // checking for the correct board location
+        console.log(gameBoard.board[rowLookup][colLookup]);
+        console.log(`row: ${rowLookup}, col: ${colLookup}`);
+        
+        //replacing the existing board marker (blank) with the player marker (X or O)
+        console.log(gameBoard.board);
+
     }
     return { playerOne, playerTwo, playTurn }
 }
+
+const game = gameController();
 
 // DISPLAY CONTROLLER
 

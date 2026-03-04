@@ -1,5 +1,5 @@
 // GAMEBOARD
-const gameBoard = (function createGameBoard() {
+const gameBoard = (() => {
     const rows = 3;
     const columns = 3;
     const board = [];
@@ -8,14 +8,14 @@ const gameBoard = (function createGameBoard() {
     for (let row = 0; row < rows; row++) {
         board.push([]);
         for (let col = 0; col < columns; col++)
-            board[row].push(col); //change to push(col) to see col numbers in console
+            board[row].push(`row:${row},col:${col}`); //change to push(col) to see col numbers in console
     };
 
     // printing the game board to the console
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell))
         console.log(boardWithCellValues);
-  };
+    };
 
     return { board, printBoard };
 })();
@@ -27,27 +27,28 @@ const createPlayer = function makePlayer(name, marker) {
 }
 
 // GAME CONTROLLER
-function gameController(row,col) {
+function gameController(row,col,board) {
     // manually creating two players
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
-    let rowLookup = row - 1;
-    let colLookup = col - 1;
-    const playTurn = (player, rowLookup, colLookup, board) => {
 
-
-        // checking for the correct board location
-        console.log(gameBoard.board[rowLookup][colLookup]);
-        console.log(`row: ${rowLookup}, col: ${colLookup}`);
-        
-        //replacing the existing board marker (blank) with the player marker (X or O)
+    // playing a turn
+    const playTurn = (player, row, col, board) => {
+        // checking for the correct board location and layout
+        console.log(gameBoard.board[row][col]);
         console.log(gameBoard.board);
 
+        //replacing the existing board marker (blank) with the player marker (X or O)
+        gameBoard.board[row].splice(col,1,player.marker);
     }
-    return { playerOne, playerTwo, playTurn }
+
+    return { playerOne, playerTwo, playTurn };
 }
 
 const game = gameController();
 
 // DISPLAY CONTROLLER
+
+
+// CONSOLE TESTING
 

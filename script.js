@@ -31,6 +31,8 @@ function gameController(row,col,board) {
     // manually creating two players
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
+    const players = [playerOne, playerTwo];
+    var activePlayer = players[0];
 
     // playing a turn
     const playTurn = (player, row, col) => {
@@ -47,21 +49,31 @@ function gameController(row,col,board) {
         }
     }
 
-    // check if someone has won, will need to 
-    // be called after each turn I think
-    const checkWinner = (player) => {
+    // check if someone has won, will need to be called after each turn
+    const checkWinner = () => {
         // checking row winner
         for (let i = 0; i < 3; i++) {
-            if (gameBoard.board[i][0] === player.marker && gameBoard.board[i][1] === player.marker && gameBoard.board[i][2]) {
+            if (gameBoard.board[i][0] === activePlayer.marker && gameBoard.board[i][1] === activePlayer.marker && gameBoard.board[i][2] === activePlayer.marker) {
+                console.log("Holy shit you won dude");
                 return true;
-            }
-        }
+            };
+        };
 
         // checking col winner
-
+        for (let j = 0; j < 3; j++) {
+            if (gameBoard.board[0][j] === activePlayer.marker && gameBoard.board[1][j] === activePlayer.marker && gameBoard.board[2][j] === activePlayer.marker) {
+                console.log("Oh fuck it goes up and down too??");
+                return true;
+            };
+        };
 
         // checking diagonal winner
-    }
+        if (gameBoard.board[0][0] === activePlayer.marker && gameBoard.board[1][1] === activePlayer.marker && gameBoard.board[2][2] === activePlayer.marker) {
+            console.log("Top left to bottom right, fancy shit.")
+        } else if (gameBoard.board[0][2] === activePlayer.marker && gameBoard.board[1][1] === activePlayer.marker && gameBoard.board[2][0] === activePlayer.marker) {
+            console.log("Top right to bottom left this time. You cheeky bitch.")
+        };
+    };
 
     return { playerOne, playerTwo, playTurn };
 }

@@ -32,7 +32,7 @@ function gameController(row,col,board) {
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
     const players = [playerOne, playerTwo];
-    var activePlayer = players[0];
+    let activePlayer = players[0];
 
     // playing a turn
     const playTurn = (player, row, col) => {
@@ -44,12 +44,14 @@ function gameController(row,col,board) {
         if (gameBoard.board[row][col] === "_") {
             gameBoard.board[row].splice(col,1,player.marker);
             checkWinner();
+            console.log(activePlayer);
         } else {
             console.log("That space is already taken, try again");
         }
         if (checkWinner() === true) {
                 console.log("Winner winner chicken dinner")
         };
+        switchPlayerTurn();
     };
 
     // check if someone has won, will need to be called after each turn
@@ -80,8 +82,16 @@ function gameController(row,col,board) {
         };
     };
 
+    const switchPlayerTurn = () => {
+        if (activePlayer === players[0]) {
+            activePlayer = players[1]
+        } else {
+            activePlayer = players[0]
+        };
+    };
+
     return { playerOne, playerTwo, playTurn };
-}
+};
 
 const game = gameController();
 

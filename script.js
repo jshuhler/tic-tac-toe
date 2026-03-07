@@ -37,7 +37,6 @@ function gameController(row,col,board) {
     // playing a turn
     const playTurn = (player, row, col) => {
         // checking for the correct board location and layout
-        console.log(gameBoard.board[row][col]);
         console.log(gameBoard.board);
 
         //replacing the existing board marker (blank) with the player marker (X or O)
@@ -92,11 +91,6 @@ function gameController(row,col,board) {
         const gameDraw = gameBoard.board.every((row) => row.every(cell => cell !== "_"));
         return gameDraw;
     }
-
-    //     const printBoard = () => {
-    //     const boardWithCellValues = board.map((row) => row.map((cell) => cell))
-    //     console.log(boardWithCellValues);
-    // };
 
     // switching the active player
     const switchPlayerTurn = () => {

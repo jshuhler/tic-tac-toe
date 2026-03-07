@@ -89,11 +89,8 @@ function gameController(row,col,board) {
 
     // checking if there is a tie
     const checkTie = () => {
-        // const gameDraw = gameBoard.board.map((row) => row.some(cell => cell === "_"));
-        const gameDraw = gameBoard.board.some((row) => row.every(cell => cell !== "_"));
+        const gameDraw = gameBoard.board.every((row) => row.every(cell => cell !== "_"));
         return gameDraw;
-
-        // gameBoard.game.every(cell => cell !== "_")
     }
 
     //     const printBoard = () => {

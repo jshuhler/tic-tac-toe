@@ -48,9 +48,14 @@ function gameController(row,col,board) {
         } else {
             console.log("That space is already taken, try again");
         }
+
         if (checkWinner() === true) {
-                console.log("Winner winner chicken dinner")
+            console.log("Winner winner chicken dinner")
         };
+
+        if (checkTie() === true) {
+            console.log("This game ends in a draw!");
+        }
         switchPlayerTurn();
     };
 
@@ -82,6 +87,21 @@ function gameController(row,col,board) {
         };
     };
 
+    // checking if there is a tie
+    const checkTie = () => {
+        // const gameDraw = gameBoard.board.map((row) => row.some(cell => cell === "_"));
+        const gameDraw = gameBoard.board.some((row) => row.every(cell => cell !== "_"));
+        return gameDraw;
+
+        // gameBoard.game.every(cell => cell !== "_")
+    }
+
+    //     const printBoard = () => {
+    //     const boardWithCellValues = board.map((row) => row.map((cell) => cell))
+    //     console.log(boardWithCellValues);
+    // };
+
+    // switching the active player
     const switchPlayerTurn = () => {
         if (activePlayer === players[0]) {
             activePlayer = players[1]

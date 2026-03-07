@@ -37,3 +37,14 @@ Does that help you picture it a bit better?
 and
 
 https://discord.com/channels/505093832157691914/690590001486102589/1477759150955040810
+
+### testing
+game.playTurn(game.playerOne,0,0);
+game.playTurn(game.playerOne,0,2);
+game.playTurn(game.playerOne,1,0);
+game.playTurn(game.playerOne,2,2);
+game.playTurn(game.playerOne,2,1);
+game.playTurn(game.playerTwo,0,1);
+game.playTurn(game.playerTwo,1,1);
+game.playTurn(game.playerTwo,1,2);
+game.playTurn(game.playerTwo,2,0);

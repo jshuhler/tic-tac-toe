@@ -112,18 +112,19 @@ function displayController() {
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
-        const gridContainer = document.getElementById('grid-container');
+        const gridContainer = document.querySelector('.grid-container');
         console.log(gameBoard.board);
 
         for (let i = 0; i < arr.length; i++) {
             const rowNum = arr[i];
-            for (let j = 0; j < rowNum; j++) {
-                const gridSpace = document.createElement('grid-space');
+            for (let j = 0; j < rowNum.length; j++) {
+                const gridSpace = document.createElement('div');
+                gridSpace.classList = "grid-space";
                 gridContainer.appendChild(gridSpace);
             }
         }
     }
-    drawBoard(gameBoard.game);
+    drawBoard(gameBoard.board);
 }
 
 const display = displayController();

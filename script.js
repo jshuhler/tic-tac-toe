@@ -108,6 +108,22 @@ const game = gameController();
 
 // DISPLAY CONTROLLER
 
+function displayController() {
+    
+    // creating the grid spaces within `grid-container`
+    const drawBoard = (arr) => {
+        const gridContainer = document.getElementById('grid-container');
+        console.log(gameBoard.board);
 
-// CONSOLE TESTING
+        for (let i = 0; i < arr.length; i++) {
+            const rowNum = arr[i];
+            for (let j = 0; j < rowNum; j++) {
+                const gridSpace = document.createElement('grid-space');
+                gridContainer.appendChild(gridSpace);
+            }
+        }
+    }
+    drawBoard(gameBoard.game);
+}
 
+const display = displayController();

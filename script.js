@@ -124,12 +124,14 @@ function displayController() {
                 // gridSpace.textContent = player.marker;
                 // gridSpace.textContent = `r:${[i]}, c:${[j]}`;
                 gridContainer.appendChild(gridSpace);
-            }
-        }
-        // event listeners for the gridSpace clicks
+
+                        // event listeners for the gridSpace clicks
         gridSpace.addEventListener('click', () => {
             gridSpace.textContent = `${player.marker}`;
         })
+            }
+        }
+
     }
 
     drawBoard(gameBoard.board);

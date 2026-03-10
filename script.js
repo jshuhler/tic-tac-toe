@@ -101,7 +101,7 @@ function gameController(row,col,board) {
         };
     };
 
-    return { playerOne, playerTwo, playTurn };
+    return { playerOne, playerTwo, playTurn, activePlayer };
 };
 
 const game = gameController();
@@ -120,10 +120,18 @@ function displayController() {
             for (let j = 0; j < rowNum.length; j++) {
                 const gridSpace = document.createElement('div');
                 gridSpace.classList = "grid-space";
+
+                // gridSpace.textContent = player.marker;
+                // gridSpace.textContent = `r:${[i]}, c:${[j]}`;
                 gridContainer.appendChild(gridSpace);
             }
         }
+        // event listeners for the gridSpace clicks
+        gridSpace.addEventListener('click', () => {
+            gridSpace.textContent = `${player.marker}`;
+        })
     }
+
     drawBoard(gameBoard.board);
 }
 

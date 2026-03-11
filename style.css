@@ -50,9 +50,9 @@
 }
 
 .grid-space {
+   font-family: 'Finger Paint', 'JetBrains Mono', monospace;
    background-color: var(--body-color);
    text-align: center;
-   justify-content: center;
    font-size: xxx-large;
 }
 

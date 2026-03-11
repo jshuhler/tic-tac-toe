@@ -104,7 +104,7 @@ function gameController() { // removed `row,col,board` from parameters that were
     // getting activePlayer out of closure? maybe?
     const getActivePlayer = () => activePlayer;
 
-    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer };
+    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner };
 };
 
 const game = gameController();
@@ -126,11 +126,16 @@ function displayController() {
                 gridContainer.appendChild(gridSpace);
 
                 // event listeners for the gridSpace clicks
-                gridSpace.addEventListener('click', () => {
-                    gridSpace.textContent = game.getActivePlayer().marker;
-                    console.log(game.players);
-                    console.log(game.getActivePlayer());
-                    game.switchPlayerTurn();
+                gridSpace.addEventListener('click', (e) => {
+                    if (gridSpace.textContent === "") {
+                        gridSpace.textContent = game.getActivePlayer().marker;
+                        console.log(game.players);
+                        console.log(game.getActivePlayer());
+                        game.checkWinner();
+                        game.switchPlayerTurn();
+                    } else {
+                        e.preventDefault();
+                    }
                 });
             };
         };

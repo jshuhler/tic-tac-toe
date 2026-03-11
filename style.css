@@ -52,6 +52,8 @@
 .grid-space {
    background-color: var(--body-color);
    text-align: center;
+   justify-content: center;
+   font-size: xxx-large;
 }
 
 /* ===================================

@@ -27,7 +27,7 @@ const createPlayer = function makePlayer(name, marker) {
 }
 
 // GAME CONTROLLER
-function gameController(row,col,board) {
+function gameController() { // removed `row,col,board` from parameters that weren't being used
     // manually creating two players
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
@@ -101,7 +101,10 @@ function gameController(row,col,board) {
         };
     };
 
-    return { playerOne, playerTwo, playTurn, activePlayer };
+    // getting activePlayer out of closure? maybe?
+    const getActivePlayer = () => activePlayer;
+
+    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer };
 };
 
 const game = gameController();
@@ -120,21 +123,25 @@ function displayController() {
             for (let j = 0; j < rowNum.length; j++) {
                 const gridSpace = document.createElement('div');
                 gridSpace.classList = "grid-space";
-
-                // gridSpace.textContent = player.marker;
-                // gridSpace.textContent = `r:${[i]}, c:${[j]}`;
                 gridContainer.appendChild(gridSpace);
 
-                        // event listeners for the gridSpace clicks
-        gridSpace.addEventListener('click', () => {
-            gridSpace.textContent = `${player.marker}`;
-        })
-            }
-        }
-
-    }
-
+                // event listeners for the gridSpace clicks
+                gridSpace.addEventListener('click', () => {
+                    gridSpace.textContent = game.getActivePlayer().marker;
+                    console.log(game.players);
+                    console.log(game.getActivePlayer());
+                    game.switchPlayerTurn();
+                });
+            };
+        };
+    };
     drawBoard(gameBoard.board);
-}
+    console.log(game.activePlayer);
+    console.log(`Active Player Marker: ${game.activePlayer.marker}`);
+
+
+    // clearing the board button
+
+};
 
 const display = displayController();

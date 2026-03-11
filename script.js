@@ -8,7 +8,7 @@ const gameBoard = (() => {
     for (let row = 0; row < rows; row++) {
         board.push([]);
         for (let col = 0; col < columns; col++)
-            board[row].push("_"); //change to push(col) to see col numbers in console
+            board[row].push(""); //change to push(col) to see col numbers in console
     };
 
     // printing the game board to the console
@@ -40,7 +40,7 @@ function gameController() { // removed `row,col,board` from parameters that were
         console.log(gameBoard.board);
 
         //replacing the existing board marker (blank) with the player marker (X or O)
-        if (gameBoard.board[row][col] === "_") {
+        if (gameBoard.board[row][col] === "") {
             gameBoard.board[row].splice(col,1,player.marker);
             checkWinner();
             console.log(activePlayer);
@@ -88,7 +88,7 @@ function gameController() { // removed `row,col,board` from parameters that were
 
     // checking if there is a tie
     const checkTie = () => {
-        const gameDraw = gameBoard.board.every((row) => row.every(cell => cell !== "_"));
+        const gameDraw = gameBoard.board.every((row) => row.every(cell => cell !== ""));
         return gameDraw;
     }
 
@@ -114,9 +114,9 @@ const game = gameController();
 function displayController() {
     
     // creating the grid spaces within `grid-container`
-    const drawBoard = (arr) => {
+    const drawBoard = (arr, row, col) => {
         const gridContainer = document.querySelector('.grid-container');
-        console.log(gameBoard.board);
+        // console.log(gameBoard.board);
 
         for (let i = 0; i < arr.length; i++) {
             const rowNum = arr[i];
@@ -129,9 +129,18 @@ function displayController() {
                 gridSpace.addEventListener('click', (e) => {
                     if (gridSpace.textContent === "") {
                         gridSpace.textContent = game.getActivePlayer().marker;
+
+                        // trying to update the console array to just check the winner off of that?
+                        console.log("gameBoard.board[i][j] after clicking under this")
+                        console.log(gameBoard.board[i][j])
+
+                        // I think this should push the marker from the active player to the array from the console version, whcih I will then use to check if there is a winner or a tie.
+                        gameBoard.board[i][j].splice(game.getActivePlayer().marker);
+
                         console.log(game.players);
                         console.log(game.getActivePlayer());
                         game.checkWinner();
+                        console.log(gameBoard.board);
                         game.switchPlayerTurn();
                     } else {
                         e.preventDefault();

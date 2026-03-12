@@ -60,6 +60,12 @@ function gameController() { // removed `row,col,board` from parameters that were
 
     // check if someone has won, will need to be called after each turn
     const checkWinner = () => {
+        // redoing this for the DOM version of the game
+        // need to rebuild the array from the data attributes
+        for (let row = 0; row < 3; row++) {
+            gridSpace.dataset.row
+        }
+
         // checking row winner
         for (let i = 0; i < 3; i++) {
             if (gameBoard.board[i][0] === activePlayer.marker && gameBoard.board[i][1] === activePlayer.marker && gameBoard.board[i][2] === activePlayer.marker) {
@@ -123,7 +129,8 @@ function displayController() {
             for (let j = 0; j < rowNum.length; j++) {
                 const gridSpace = document.createElement('div');
                 gridSpace.classList = "grid-space";
-                gridSpace.setAttribute("data-gridSpace", [i][j]); // the 2nd part of the data attribute needs to be updated here. 
+                gridSpace.setAttribute("data-row", [i]); // the 2nd part of the data attribute needs to be updated here. 
+                gridSpace.setAttribute("data-col", [j]);
                 gridContainer.appendChild(gridSpace);
 
                 // event listeners for the gridSpace clicks
@@ -153,6 +160,9 @@ function displayController() {
 
     // clearing the board button
 
+
+    // returns
+    return { drawBoard };
 };
 
 const display = displayController();

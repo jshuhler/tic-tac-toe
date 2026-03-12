@@ -52,8 +52,10 @@
 .grid-space {
    font-family: 'Finger Paint', 'JetBrains Mono', monospace;
    background-color: var(--body-color);
-   text-align: center;
-   font-size: xxx-large;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 55px;
 }
 
 /* ===================================

@@ -114,7 +114,7 @@ const game = gameController();
 function displayController() {
     
     // creating the grid spaces within `grid-container`
-    const drawBoard = (arr, row, col) => {
+    const drawBoard = (arr) => {
         const gridContainer = document.querySelector('.grid-container');
         // console.log(gameBoard.board);
 
@@ -123,6 +123,7 @@ function displayController() {
             for (let j = 0; j < rowNum.length; j++) {
                 const gridSpace = document.createElement('div');
                 gridSpace.classList = "grid-space";
+                gridSpace.setAttribute("data-gridSpace", [i][j]); // the 2nd part of the data attribute needs to be updated here. 
                 gridContainer.appendChild(gridSpace);
 
                 // event listeners for the gridSpace clicks
@@ -130,18 +131,14 @@ function displayController() {
                     if (gridSpace.textContent === "") {
                         gridSpace.textContent = game.getActivePlayer().marker;
 
-                        // trying to update the console array to just check the winner off of that?
-                        console.log("gameBoard.board[i][j] after clicking under this")
-                        console.log(gameBoard.board[i][j])
+                        console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
 
-                        // I think this should push the marker from the active player to the array from the console version, whcih I will then use to check if there is a winner or a tie.
-                        gameBoard.board[i][j].splice(game.getActivePlayer().marker);
+                        game.checkWinner(); // this isn't doing anything right now, working to figure out how to read which gridSpace was clicked
 
-                        console.log(game.players);
-                        console.log(game.getActivePlayer());
-                        game.checkWinner();
-                        console.log(gameBoard.board);
-                        game.switchPlayerTurn();
+                        // console.log(gameBoard.board); // this is just checking the old board array from the console version
+                        game.switchPlayerTurn(); // switching the active player to the next player
+                        console.log(`Current active player: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
+
                     } else {
                         e.preventDefault();
                     }
@@ -150,8 +147,8 @@ function displayController() {
         };
     };
     drawBoard(gameBoard.board);
-    console.log(game.activePlayer);
-    console.log(`Active Player Marker: ${game.activePlayer.marker}`);
+    // console.log(game.activePlayer);
+    // console.log(`Active Player Marker: ${game.activePlayer.marker}`);
 
 
     // clearing the board button

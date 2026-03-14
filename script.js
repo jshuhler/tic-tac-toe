@@ -104,7 +104,12 @@ function gameController() { // removed `row,col,board` from parameters that were
     // getting activePlayer out of closure? maybe?
     const getActivePlayer = () => activePlayer;
 
-    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner };
+    // function to run when checkWinner === true in drawBoard
+    const winnerRoutine = () => {
+
+    }
+
+    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, winnerRoutine };
 };
 
 const game = gameController();
@@ -115,6 +120,7 @@ function displayController() {
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
+        const msgContainer = document.querySelector('.message-container');
         const gridContainer = document.querySelector('.grid-container');
         // console.log(gameBoard.board);
 
@@ -128,6 +134,7 @@ function displayController() {
                 gridContainer.appendChild(gridSpace);
 
                 // event listeners for the gridSpace clicks
+                // does this need to be inside this for loop?
                 gridSpace.addEventListener('click', (e) => {
                     if (gridSpace.textContent === "") {
                         gridSpace.textContent = game.getActivePlayer().marker;
@@ -139,12 +146,26 @@ function displayController() {
 
                         // toying with pushing the activePlayer.marker (still the last turn played at this point) to gameBoard.board
                         gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
-                        
+
+                        //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
+                        game.checkWinner();
+                        if (game.checkWinner() === true) {
+                            // put together a function to run for a win and just call it here
+                            const winMessage = document.createElement("div");
+                            winMessage.classList = "win-message";
+                            winMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
+                            msgContainer.appendChild(winMessage);
+                            e.preventDefault();
+                        } else {
+                            game.switchPlayerTurn();
+                        }
+
                         // swapping player and validating activePlayer changed
-                        game.switchPlayerTurn(); // switching the active player to the next player
+                        // game.switchPlayerTurn(); // switching the active player to the next player
                         console.log(`Current active player: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
 
                     } else {
+                        // if the gridSpace being selected isn't blank, nothing happens
                         e.preventDefault();
                     }
                 });

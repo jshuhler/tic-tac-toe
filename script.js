@@ -60,12 +60,6 @@ function gameController() { // removed `row,col,board` from parameters that were
 
     // check if someone has won, will need to be called after each turn
     const checkWinner = () => {
-        // redoing this for the DOM version of the game
-        // need to rebuild the array from the data attributes
-        for (let row = 0; row < 3; row++) {
-            gridSpace.dataset.row
-        }
-
         // checking row winner
         for (let i = 0; i < 3; i++) {
             if (gameBoard.board[i][0] === activePlayer.marker && gameBoard.board[i][1] === activePlayer.marker && gameBoard.board[i][2] === activePlayer.marker) {
@@ -138,11 +132,15 @@ function displayController() {
                     if (gridSpace.textContent === "") {
                         gridSpace.textContent = game.getActivePlayer().marker;
 
+                        // checking current values in console
                         console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
+                        console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
+                        console.log(gameBoard.board); // this is just checking the old board array from the console version
 
-                        game.checkWinner(); // this isn't doing anything right now, working to figure out how to read which gridSpace was clicked
-
-                        // console.log(gameBoard.board); // this is just checking the old board array from the console version
+                        // toying with pushing the activePlayer.marker (still the last turn played at this point) to gameBoard.board
+                        gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
+                        
+                        // swapping player and validating activePlayer changed
                         game.switchPlayerTurn(); // switching the active player to the next player
                         console.log(`Current active player: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
 

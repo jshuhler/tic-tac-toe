@@ -51,7 +51,8 @@ body {
    justify-content: space-evenly;
 } */
 
-.win-message {
+.win-message,
+.tie-message {
    font-family: var(--handwritten-font);
 }
 

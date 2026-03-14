@@ -88,8 +88,7 @@ function gameController() { // removed `row,col,board` from parameters that were
 
     // checking if there is a tie
     const checkTie = () => {
-        const gameDraw = gameBoard.board.every((row) => row.every(cell => cell !== ""));
-        return gameDraw;
+        return gameBoard.board.every((row) => row.every(cell => cell !== ""));
     }
 
     // switching the active player
@@ -109,7 +108,7 @@ function gameController() { // removed `row,col,board` from parameters that were
 
     }
 
-    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, winnerRoutine };
+    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, winnerRoutine };
 };
 
 const game = gameController();
@@ -120,9 +119,10 @@ function displayController() {
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
-        const msgContainer = document.querySelector('.message-container');
+        // creating and selecting elements
+        const messageContainer = document.querySelector('.message-container');
         const gridContainer = document.querySelector('.grid-container');
-        // console.log(gameBoard.board);
+        const gameMessage = document.createElement("div");
 
         for (let i = 0; i < arr.length; i++) {
             const rowNum = arr[i];
@@ -149,13 +149,18 @@ function displayController() {
 
                         //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
                         game.checkWinner();
+                        game.checkTie();
                         if (game.checkWinner() === true) {
                             // put together a function to run for a win and just call it here
-                            const winMessage = document.createElement("div");
-                            winMessage.classList = "win-message";
-                            winMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
-                            msgContainer.appendChild(winMessage);
-                            e.preventDefault();
+                            // const winMessage = document.createElement("div");
+                            gameMessage.classList = "win-message";
+                            gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
+                            messageContainer.appendChild(gameMessage);
+
+                        } else if (game.checkTie() === true) {
+                            gameMessage.classList = "tie-message";
+                            gameMessage.textContent = (`Board's full! This one ends in a tie.`);
+                            messageContainer.appendChild(gameMessage);
                         } else {
                             game.switchPlayerTurn();
                         }

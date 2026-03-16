@@ -116,12 +116,12 @@ const game = gameController();
 // DISPLAY CONTROLLER
 
 function displayController() {
+    const messageContainer = document.querySelector('.message-container');
+    const gridContainer = document.querySelector('.grid-container');
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
         // creating and selecting elements
-        const messageContainer = document.querySelector('.message-container');
-        const gridContainer = document.querySelector('.grid-container');
         const gameMessage = document.createElement("div");
 
         for (let i = 0; i < arr.length; i++) {
@@ -134,7 +134,7 @@ function displayController() {
                 gridContainer.appendChild(gridSpace);
 
                 // event listeners for the gridSpace clicks
-                // does this need to be inside this for loop?
+                // does this need to be inside this for loop or even the drawBoard function?
                 gridSpace.addEventListener('click', (e) => {
                     if (gridSpace.textContent === "") {
                         gridSpace.textContent = game.getActivePlayer().marker;
@@ -151,12 +151,10 @@ function displayController() {
                         game.checkWinner();
                         game.checkTie();
                         if (game.checkWinner() === true) {
-                            // put together a function to run for a win and just call it here
-                            // const winMessage = document.createElement("div");
                             gameMessage.classList = "win-message";
                             gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
                             messageContainer.appendChild(gameMessage);
-
+                            boardClear();
                         } else if (game.checkTie() === true) {
                             gameMessage.classList = "tie-message";
                             gameMessage.textContent = (`Board's full! This one ends in a tie.`);
@@ -183,10 +181,23 @@ function displayController() {
 
 
     // clearing the board button
+    const boardClear = () => {
+        // creating the button
+        const clearButton = document.createElement("button");
+        clearButton.classList = "clear-grid-button";
+        clearButton.textContent = "Play another round";
+        gridContainer.appendChild(clearButton);
 
+        // the event listener to clear the board, relook at rock paper scissors for how this might work
+        clearButton.addEventListener('click', (e) => {
+            drawBoard(gameBoard.board);
+        })
+    }
+
+    // full game reset
 
     // returns
-    return { drawBoard };
+    return { drawBoard, boardClear };
 };
 
 const display = displayController();

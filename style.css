@@ -10,6 +10,7 @@
    }
 
 body {
+   background-color: var(--body-color);
    height: 100vh;
    display: flex;
    flex-direction: column;
@@ -20,12 +21,15 @@ body {
 }
 
 body.dark-mode {
-   --body-color: ;
-   --grid-color: ;
+   --body-color: #2a2a2a;
+   --grid-color: #5a5a5a; 
+   --link-color: #c97f4a;
+   --text-color: #e0e0e0;
 }
 
 :root {
-   --link-color: ;
+   --link-color: #000000;
+   --text-color: #000000;
    --h1-font-size: 2em;
    --h2-font-size: 1.45em;
    --h3-font-size: 1.15em;
@@ -40,7 +44,7 @@ body.dark-mode {
 
 button,
 a,
-img.light-dark-mode {
+svg.light-dark-mode {
     cursor: pointer;
 }
 
@@ -62,6 +66,7 @@ a:hover {
    =================================== */
 .header {
    display: flex;
+   width: 100vw;
    padding: 15px 0px;
    justify-content: center;
    position: relative;
@@ -69,14 +74,18 @@ a:hover {
 
 .title {
    font-size: var(--h1-font-size);
+   color: var(--text-color);
    justify-self: center;
 }
 
-.header img {
+.header svg {
    height: var(--h1-font-size);
    margin: 0 0 0 35px;
-   color: var(--link-color);
+   color: var(--text-color);
    position: absolute;
+   top: 50%;
+   right: 20px;
+   transform: translateY(-50%);
 }
 
 /* ===================================
@@ -93,6 +102,7 @@ a:hover {
 .win-message,
 .tie-message {
    font-family: var(--default-font);
+   color: var(--text-color);
 }
 
 .grid-container {
@@ -108,6 +118,7 @@ a:hover {
 .grid-space {
    font-family: var(--handwritten-font);
    background-color: var(--body-color);
+   color: var(--text-color);
    display: flex;
    align-items: center;
    justify-content: center;

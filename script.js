@@ -118,6 +118,7 @@ const game = gameController();
 function displayController() {
     const messageContainer = document.querySelector('.message-container');
     const gridContainer = document.querySelector('.grid-container');
+    const clearContainer = document.querySelector('.clear-container')
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
@@ -184,9 +185,10 @@ function displayController() {
     const boardClear = () => {
         // creating the button
         const clearButton = document.createElement("button");
+
         clearButton.classList = "clear-grid-button";
         clearButton.textContent = "Play another round";
-        gridContainer.appendChild(clearButton);
+        clearContainer.appendChild(clearButton);
 
         // the event listener to clear the board, relook at rock paper scissors for how this might work
         clearButton.addEventListener('click', (e) => {
@@ -195,6 +197,15 @@ function displayController() {
     }
 
     // full game reset
+
+
+    const setTheme = () => {
+        const body = document.body;
+        const newTheme = body.className === "dark-mode" ? "" : "dark-mode";
+        body.className = newTheme;
+    }
+
+    document.querySelector(".light-dark-mode").addEventListener('click', setTheme);
 
     // returns
     return { drawBoard, boardClear };

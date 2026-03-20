@@ -155,7 +155,7 @@ function displayController() {
                             gameMessage.classList = "win-message";
                             gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
                             messageContainer.appendChild(gameMessage);
-                            boardClear();
+                            clearBoard();
                         } else if (game.checkTie() === true) {
                             gameMessage.classList = "tie-message";
                             gameMessage.textContent = (`Board's full! This one ends in a tie.`);
@@ -182,7 +182,7 @@ function displayController() {
 
 
     // clearing the board button
-    const boardClear = () => {
+    const clearBoard = () => {
         // creating the button
         const clearButton = document.createElement("button");
 
@@ -191,14 +191,22 @@ function displayController() {
         clearContainer.appendChild(clearButton);
 
         // the event listener to clear the board, relook at rock paper scissors for how this might work
+        // will need to set the DOM game board and the array gameBoard places both to "", not just one of them
         clearButton.addEventListener('click', (e) => {
-            drawBoard(gameBoard.board);
-        })
-    }
+            // clearing the gameBoard array
+            // gameBoard.board.forEach();
+
+            // clearing the DOM gridSpaces
+            const gridSpaceAll = document.querySelectorAll('.grid-space');
+            gridSpaceAll.forEach(element => element.textContent = "");
+            console.log("Play another round button was just clicked!")
+        });
+    };
 
     // full game reset
 
 
+    // light & dark mode
     const setTheme = () => {
         const body = document.body;
         const newTheme = body.className === "dark-mode" ? "" : "dark-mode";
@@ -207,8 +215,8 @@ function displayController() {
 
     document.querySelector(".light-dark-mode").addEventListener('click', setTheme);
 
-    // returns
-    return { drawBoard, boardClear };
+    // displayController returns
+    return { drawBoard, clearBoard };
 };
 
 const display = displayController();

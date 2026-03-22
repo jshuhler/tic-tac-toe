@@ -111,11 +111,12 @@ function gameController() { // removed `row,col,board` from parameters that were
     return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, winnerRoutine };
 };
 
-const game = gameController();
+
 
 // DISPLAY CONTROLLER
 
 function displayController() {
+    const game = gameController();
     const messageContainer = document.querySelector('.message-container');
     const gridContainer = document.querySelector('.grid-container');
     const clearContainer = document.querySelector('.clear-container');
@@ -136,49 +137,58 @@ function displayController() {
         };
     };
 
-    // event listeners for the gridSpace clicks
+    // event listener for the gridSpace clicks
     gridContainer.addEventListener('click', (e) => {
-        // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
-        if (e.target.textContent === "") {
-            e.target.textContent = game.getActivePlayer().marker;
+        
+        if (game.checkWinner() !== true) {
 
-            // checking current values in console
-            console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
-            console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
-            console.log(gameBoard.board); //     this is just checking the old board array from the console version
+        
+        
+            // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
+            if (e.target.textContent === "") {
+                e.target.textContent = game.getActivePlayer().marker;
 
-            // toying with pushing the activePlayer.marker (still the last turn played at this point) to gameBoard.board
-            gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
+                // checking current values in console
+                console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
+                console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
+                console.log(gameBoard.board); //     this is just checking the old board array from the console version
 
-            //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
-            game.checkWinner();
-            game.checkTie();
-            if (game.checkWinner() === true) {
-                gameMessage.classList = "win-message";
-                gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
-                messageContainer.appendChild(gameMessage);
-                clearBoard();
-            } else if (game.checkTie() === true) {
-                gameMessage.classList = "tie-message";
-                gameMessage.textContent = (`Board's full! This one ends in a tie.`);
-                messageContainer.appendChild(gameMessage);
+                // pushing the playerMarker of the selected gridSpace to the gameBoard array
+                gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
+
+                //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
+                game.checkWinner();
+                game.checkTie();
+                if (game.checkWinner() === true) {
+                    gameMessage.classList = "win-message";
+                    gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
+                    messageContainer.appendChild(gameMessage);
+                    clearBoard();
+                    // this lets the player who just lost go first if they play another round
+                    game.switchPlayerTurn();
+                    e.preventDefault();
+                } else if (game.checkTie() === true) {
+                    gameMessage.classList = "tie-message";
+                    gameMessage.textContent = (`Board's full! This one ends in a tie.`);
+                    messageContainer.appendChild(gameMessage);
+                    clearBoard();
+                } else {
+                    game.switchPlayerTurn();
+                }
+
+                // swapping player and validating activePlayer changed
+                console.log(`Current active player: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
+                console.log(`-----------------`);
+
             } else {
-                game.switchPlayerTurn();
+                // if the gridSpace being selected isn't blank, nothing happens
+                e.preventDefault();
             }
-
-            // swapping player and validating activePlayer changed
-            // game.switchPlayerTurn(); // switching the active player to the next player
-            console.log(`Current active player: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
-            console.log(`-----------------`);
-
-        } else {
-            // if the gridSpace being selected isn't blank, nothing happens
-            e.preventDefault();
-        }
+    } else {
+        return
+    }
     });
     drawBoard(gameBoard.board);
-    // console.log(game.activePlayer);
-    // console.log(`Active Player Marker: ${game.activePlayer.marker}`);
 
     // clearing the board button
     const clearBoard = () => {
@@ -189,11 +199,14 @@ function displayController() {
         clearButton.textContent = "Play another round";
         clearContainer.appendChild(clearButton);
 
-        // the event listener to clear the board, relook at rock paper scissors for how this might work
-        // will need to set the DOM game board and the array gameBoard places both to "", not just one of them
+        // the event listener to clear the board
         clearButton.addEventListener('click', (e) => {
             // clearing the gameBoard array
-            // gameBoard.board.forEach();
+            for (let row = 0; row < gameBoard.board.length; row++) {
+                for (let col = 0; col < gameBoard.board[row].length; col++)
+                    // gameBoard.board[row].push(""); //change to push(col) to see col numbers in console
+                    gameBoard.board[row][col] = "";
+            };
 
             // clearing the DOM gridSpaces
             const gridSpaceAll = document.querySelectorAll('.grid-space');
@@ -202,6 +215,10 @@ function displayController() {
             });
             console.log("Play another round button was just clicked!");
             console.log(gameBoard.board);
+
+            // removing the gameMessage and clearButton
+            gameMessage.remove();
+            clearButton.remove();
         });
     };
 

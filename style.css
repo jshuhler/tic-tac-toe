@@ -103,6 +103,7 @@ a:hover {
 .tie-message {
    font-family: var(--default-font);
    color: var(--text-color);
+   padding: 20px 0px;
 }
 
 .grid-container {
@@ -123,6 +124,15 @@ a:hover {
    align-items: center;
    justify-content: center;
    font-size: 55px;
+}
+
+.clear-container {
+   padding: 20px 0px;
+}
+
+.clear-grid-button {
+   border-radius: var(--button-radius);
+   padding: 8px 16px;
 }
 
 /* ===================================

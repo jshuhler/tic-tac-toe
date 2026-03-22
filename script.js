@@ -168,7 +168,7 @@ function displayController() {
                     game.switchPlayerTurn();
                     e.preventDefault();
                 } else if (game.checkTie() === true) {
-                    gameMessage.classList = "tie-message";
+                    gameMessage.classList = "tie-message"; 
                     gameMessage.textContent = (`Board's full! This one ends in a tie.`);
                     messageContainer.appendChild(gameMessage);
                     clearBoard();

@@ -62,28 +62,27 @@ function gameController() { // removed `row,col,board` from parameters that were
     const checkWinner = () => {
         // checking row winner
         for (let i = 0; i < 3; i++) {
-            if (gameBoard.board[i][0] === activePlayer.marker && gameBoard.board[i][1] === activePlayer.marker && gameBoard.board[i][2] === activePlayer.marker) {
-                // console.log("Holy shit you won dude");
+            if (gameBoard.board[i][0] === gameBoard.board[i][1] && gameBoard.board[i][1] === gameBoard.board[i][2] && gameBoard.board[i][1] !== "") {
                 return true;
             };
         };
 
         // checking col winner
         for (let j = 0; j < 3; j++) {
-            if (gameBoard.board[0][j] === activePlayer.marker && gameBoard.board[1][j] === activePlayer.marker && gameBoard.board[2][j] === activePlayer.marker) {
-                // console.log("Oh fuck it goes up and down too??");
+            if (gameBoard.board[0][j] === gameBoard.board[1][j] && gameBoard.board[1][j] === gameBoard.board[2][j] && gameBoard.board[1][j] !== "") {
                 return true;
             };
         };
 
         // checking diagonal winner
-        if (gameBoard.board[0][0] === activePlayer.marker && gameBoard.board[1][1] === activePlayer.marker && gameBoard.board[2][2] === activePlayer.marker) {
-            // console.log("Top left to bottom right, fancy shit.");
+        if (gameBoard.board[0][0] === gameBoard.board[1][1] && gameBoard.board[1][1] === gameBoard.board[2][2] && gameBoard.board[1][1] !== "") {
             return true;
-        } else if (gameBoard.board[0][2] === activePlayer.marker && gameBoard.board[1][1] === activePlayer.marker && gameBoard.board[2][0] === activePlayer.marker) {
-            // console.log("Top right to bottom left this time. You cheeky bitch.");
+        } else if (gameBoard.board[0][2] === gameBoard.board[1][1] && gameBoard.board[1][1] === gameBoard.board[2][0] && gameBoard.board[1][1] !== "") {
             return true;
         };
+
+        // otherwise...
+        return false;
     };
 
     // checking if there is a tie
@@ -139,19 +138,16 @@ function displayController() {
 
     // event listener for the gridSpace clicks
     gridContainer.addEventListener('click', (e) => {
-        
-        if (game.checkWinner() !== true) {
-
-        
-        
+        game.checkWinner();
+        console.log(`before: ${game.checkWinner()}`)
             // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
             if (e.target.textContent === "") {
                 e.target.textContent = game.getActivePlayer().marker;
-
+                console.log(`after: ${game.checkWinner()}`)
                 // checking current values in console
                 console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
                 console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
-                console.log(gameBoard.board); //     this is just checking the old board array from the console version
+                console.log(gameBoard.board); // this is just checking the old board array from the console version
 
                 // pushing the playerMarker of the selected gridSpace to the gameBoard array
                 gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
@@ -166,7 +162,7 @@ function displayController() {
                     clearBoard();
                     // this lets the player who just lost go first if they play another round
                     game.switchPlayerTurn();
-                    e.preventDefault();
+                    return;
                 } else if (game.checkTie() === true) {
                     gameMessage.classList = "tie-message"; 
                     gameMessage.textContent = (`Board's full! This one ends in a tie.`);
@@ -182,11 +178,8 @@ function displayController() {
 
             } else {
                 // if the gridSpace being selected isn't blank, nothing happens
-                e.preventDefault();
+                return;
             }
-    } else {
-        return
-    }
     });
     drawBoard(gameBoard.board);
 

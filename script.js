@@ -138,12 +138,13 @@ function displayController() {
 
     // event listener for the gridSpace clicks
     gridContainer.addEventListener('click', (e) => {
-        game.checkWinner();
-        console.log(`before: ${game.checkWinner()}`)
-            // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
+        if (game.checkWinner() === true) {
+            return;
+        } else {
+            console.log(`before: ${game.checkWinner()}`)
+                // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
             if (e.target.textContent === "") {
                 e.target.textContent = game.getActivePlayer().marker;
-                console.log(`after: ${game.checkWinner()}`)
                 // checking current values in console
                 console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
                 console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
@@ -155,6 +156,8 @@ function displayController() {
                 //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
                 game.checkWinner();
                 game.checkTie();
+                                console.log(`after: ${game.checkWinner()}`)
+
                 if (game.checkWinner() === true) {
                     gameMessage.classList = "win-message";
                     gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
@@ -179,8 +182,11 @@ function displayController() {
             } else {
                 // if the gridSpace being selected isn't blank, nothing happens
                 return;
-            }
+            };
+        };
     });
+
+
     drawBoard(gameBoard.board);
 
     // clearing the board button

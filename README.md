@@ -48,3 +48,10 @@ game.playTurn(game.playerTwo,0,1);
 game.playTurn(game.playerTwo,1,1);
 game.playTurn(game.playerTwo,1,2);
 game.playTurn(game.playerTwo,2,0);
+
+# outstanding issues/to do
+- [ ] fix playing after a win has occurred
+- [ ] fix clicking on the grid freaking out (because of where the event listener is)
+- [ ] add support for players typing in their name
+- [ ] add scoreboard
+= [ ] add full game reset button (takes you back to typing in names) vs play another round button

@@ -156,7 +156,7 @@ function displayController() {
                 //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
                 game.checkWinner();
                 game.checkTie();
-                                console.log(`after: ${game.checkWinner()}`)
+                console.log(`after: ${game.checkWinner()}`)
 
                 if (game.checkWinner() === true) {
                     gameMessage.classList = "win-message";

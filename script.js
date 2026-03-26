@@ -28,9 +28,11 @@ const createPlayer = function makePlayer(name, marker) {
 
 // GAME CONTROLLER
 function gameController() { // removed `row,col,board` from parameters that weren't being used
-    // manually creating two players
+    // player details
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
+    let playerOneScore = 0;
+    let playerTwoScore = 0;
     const players = [playerOne, playerTwo];
     let activePlayer = players[0];
 
@@ -99,12 +101,11 @@ function gameController() { // removed `row,col,board` from parameters that were
         };
     };
 
-    // getting activePlayer out of closure? maybe?
+    // getting activePlayer out of closure
     const getActivePlayer = () => activePlayer;
 
-    // function to run when checkWinner === true in drawBoard
-    const winnerRoutine = () => {
-
+    const incrementScore = () => {
+        getActivePlayer
     }
 
     return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, winnerRoutine };
@@ -154,15 +155,14 @@ function displayController() {
                 gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
 
                 //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
-                game.checkWinner();
-                game.checkTie();
-                console.log(`after: ${game.checkWinner()}`)
-
                 if (game.checkWinner() === true) {
                     gameMessage.classList = "win-message";
                     gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
                     messageContainer.appendChild(gameMessage);
                     clearBoard();
+
+                    // add something here to call the incrementScore function
+
                     // this lets the player who just lost go first if they play another round
                     game.switchPlayerTurn();
                     return;

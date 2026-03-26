@@ -89,16 +89,57 @@ a:hover {
 }
 
 /* ===================================
-   MAIN BODY
+   MAIN BODY CONTAINERS
    =================================== */
 .container {
    display: flex;
-   flex-direction: column;
-   /* flex-grow: 1; */
-   /* justify-content: space-evenly; */
-   align-items: center;
+   flex-wrap: wrap;
+   width: 100vw;
+   justify-content: center;
 }
 
+/* .left-container {
+   padding-right: 3vw;
+}
+
+.right-container {
+   padding-left: 3vw;
+} */
+
+.left-container,
+.right-container {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   padding: 50px;
+}
+
+/* ===================================
+   SCOREBOARD
+   =================================== */
+.scoreboard {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   border: solid black 1px;
+   width: 250px;
+   height: 200px;
+}
+
+.score-title {
+   font-size: var(--h2-font-size);
+}
+
+.score-container {
+   display: grid;
+   grid-template-rows: repeat(2, 1fr);
+   grid-template-columns: 15fr 1fr;
+}
+   
+/* ===================================
+   GAME GRID & GAME MESSAGES
+   =================================== */
 .win-message,
 .tie-message {
    font-family: var(--default-font);
@@ -124,10 +165,6 @@ a:hover {
    align-items: center;
    justify-content: center;
    font-size: 55px;
-}
-
-.clear-container {
-   padding: 20px 0px;
 }
 
 .clear-grid-button {

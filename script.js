@@ -104,11 +104,28 @@ function gameController() { // removed `row,col,board` from parameters that were
     // getting activePlayer out of closure
     const getActivePlayer = () => activePlayer;
 
+    // incrementing the score after a win
     const incrementScore = () => {
-        getActivePlayer
-    }
+        if (activePlayer === players[0]) {
+            playerOneScore++;
+        } else {
+            playerTwoScore++;
+        };
+    };
 
-    return { players, playerOne, playerTwo, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, winnerRoutine };
+    // getting the scores out of closure
+    const getPlayerOneScore = () => playerOneScore;
+    const getPlayerTwoScore = () => playerTwoScore;
+
+    const getPlayerScores = () => {
+        if (activePlayer === players[0]) {
+            return playerOneScore;
+        } else {
+            return playerTwoScore;
+        };
+    };
+
+    return { players, playerOne, playerTwo, playerOneScore, playerTwoScore, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, incrementScore, getPlayerScores, getPlayerOneScore, getPlayerTwoScore };
 };
 
 
@@ -142,7 +159,9 @@ function displayController() {
         if (game.checkWinner() === true) {
             return;
         } else {
-            console.log(`before: ${game.checkWinner()}`)
+            // testing
+            console.log(`before: ${game.checkWinner()}`);
+            
                 // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
             if (e.target.textContent === "") {
                 e.target.textContent = game.getActivePlayer().marker;
@@ -150,19 +169,24 @@ function displayController() {
                 console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
                 console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
                 console.log(gameBoard.board); // this is just checking the old board array from the console version
-
+                
                 // pushing the playerMarker of the selected gridSpace to the gameBoard array
                 gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
 
+                // testing
+                console.log(`after: ${game.checkWinner()}`);
+                
                 //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
                 if (game.checkWinner() === true) {
+                    game.incrementScore();
+                    console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
                     gameMessage.classList = "win-message";
                     gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
                     messageContainer.appendChild(gameMessage);
                     clearBoard();
 
                     // add something here to call the incrementScore function
-
+                    
                     // this lets the player who just lost go first if they play another round
                     game.switchPlayerTurn();
                     return;
@@ -170,6 +194,7 @@ function displayController() {
                     gameMessage.classList = "tie-message"; 
                     gameMessage.textContent = (`Board's full! This one ends in a tie.`);
                     messageContainer.appendChild(gameMessage);
+                    console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
                     clearBoard();
                 } else {
                     game.switchPlayerTurn();

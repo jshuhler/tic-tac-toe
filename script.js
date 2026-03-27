@@ -113,19 +113,20 @@ function gameController() { // removed `row,col,board` from parameters that were
         };
     };
 
-    // getting the scores out of closure
+    // getting the scores out of closure, this lets me work with both scores separately
     const getPlayerOneScore = () => playerOneScore;
     const getPlayerTwoScore = () => playerTwoScore;
 
-    const getPlayerScores = () => {
-        if (activePlayer === players[0]) {
-            return playerOneScore;
-        } else {
-            return playerTwoScore;
-        };
-    };
+    // I don't think I need this, was just trying to not return SO MANY FUNCTIONS below
+    // const getPlayerScores = () => {
+    //     if (activePlayer === players[0]) {
+    //         return playerOneScore;
+    //     } else {
+    //         return playerTwoScore;
+    //     };
+    // };
 
-    return { players, playerOne, playerTwo, playerOneScore, playerTwoScore, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, incrementScore, getPlayerScores, getPlayerOneScore, getPlayerTwoScore };
+    return { players, playerOne, playerTwo, playerOneScore, playerTwoScore, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, incrementScore, getPlayerOneScore, getPlayerTwoScore };
 };
 
 
@@ -138,6 +139,11 @@ function displayController() {
     const gridContainer = document.querySelector('.grid-container');
     const clearContainer = document.querySelector('.clear-container');
     const gameMessage = document.createElement("div");
+    const scoreboard = document.querySelector('.score-container');
+    const playerOneName = document.getElementById("scoreboard-name1");
+    const playerTwoName = document.getElementById("scoreboard-name2");
+    let  = document.getElementById("scoreboard-score1");
+    let  = document.getElementById("scoreboard-score2");
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
@@ -179,14 +185,12 @@ function displayController() {
                 //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
                 if (game.checkWinner() === true) {
                     game.incrementScore();
+                    updateScoreboard();
                     console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
                     gameMessage.classList = "win-message";
                     gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
                     messageContainer.appendChild(gameMessage);
-                    clearBoard();
-
-                    // add something here to call the incrementScore function
-                    
+                    clearBoard();                    
                     // this lets the player who just lost go first if they play another round
                     game.switchPlayerTurn();
                     return;
@@ -245,6 +249,11 @@ function displayController() {
             clearButton.remove();
         });
     };
+
+    // updating the scoreboard
+    const updateScoreboard = () => {
+        
+    }
 
     // full game reset
 

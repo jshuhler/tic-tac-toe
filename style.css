@@ -136,6 +136,10 @@ a:hover {
    grid-template-rows: repeat(2, 1fr);
    grid-template-columns: 15fr 1fr;
 }
+
+.score {
+   font-family: var(--handwritten-font);
+}
    
 /* ===================================
    GAME GRID & GAME MESSAGES

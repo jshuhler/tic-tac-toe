@@ -144,6 +144,7 @@ function displayController() {
     const playerTwoName = document.getElementById("scoreboard-name2");
     let p1DisplayScore = document.getElementById("scoreboard-score1");
     let p2DisplayScore = document.getElementById("scoreboard-score2");
+    const dialog = document.querySelector("dialog"); //for the listener on the DOM to show the player name modal
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
@@ -249,6 +250,11 @@ function displayController() {
             clearButton.remove();
         });
     };
+
+    // displaying the player name modal on page load
+    window.addEventListener('DOMContentLoaded',() => {
+        dialog.showModal();
+    });
 
     // updating the scoreboard
     const updateScoreboard = () => {

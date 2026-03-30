@@ -142,8 +142,8 @@ function displayController() {
     const scoreboard = document.querySelector('.score-container');
     const playerOneName = document.getElementById("scoreboard-name1");
     const playerTwoName = document.getElementById("scoreboard-name2");
-    let  = document.getElementById("scoreboard-score1");
-    let  = document.getElementById("scoreboard-score2");
+    let p1DisplayScore = document.getElementById("scoreboard-score1");
+    let p2DisplayScore = document.getElementById("scoreboard-score2");
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
@@ -188,7 +188,7 @@ function displayController() {
                     updateScoreboard();
                     console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
                     gameMessage.classList = "win-message";
-                    gameMessage.textContent = (`That's 3 in a row. ${game.getActivePlayer().name} wins!`);
+                    gameMessage.textContent = (`${game.getActivePlayer().name} wins!`);
                     messageContainer.appendChild(gameMessage);
                     clearBoard();                    
                     // this lets the player who just lost go first if they play another round
@@ -252,8 +252,9 @@ function displayController() {
 
     // updating the scoreboard
     const updateScoreboard = () => {
-        
-    }
+        p1DisplayScore.textContent = game.getPlayerOneScore();
+        p2DisplayScore.textContent = game.getPlayerTwoScore();
+    };
 
     // full game reset
 
@@ -263,7 +264,7 @@ function displayController() {
         const body = document.body;
         const newTheme = body.className === "dark-mode" ? "" : "dark-mode";
         body.className = newTheme;
-    }
+    };
 
     document.querySelector(".light-dark-mode").addEventListener('click', setTheme);
 

@@ -144,7 +144,10 @@ function displayController() {
     const playerTwoName = document.getElementById("scoreboard-name2");
     let p1DisplayScore = document.getElementById("scoreboard-score1");
     let p2DisplayScore = document.getElementById("scoreboard-score2");
+    const addPlayerNames = document.querySelector(".add-player-names");
     const dialog = document.querySelector("dialog"); //for the listener on the DOM to show the player name modal
+    const submitNames = document.getElementById("add-player-names-submit");
+    const closeNames = document.getElementById("close-player-names");
     
     // creating the grid spaces within `grid-container`
     const drawBoard = (arr) => {
@@ -183,7 +186,7 @@ function displayController() {
                 // testing
                 console.log(`after: ${game.checkWinner()}`);
                 
-                //checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
+                // checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
                 if (game.checkWinner() === true) {
                     game.incrementScore();
                     updateScoreboard();
@@ -203,6 +206,10 @@ function displayController() {
                     clearBoard();
                 } else {
                     game.switchPlayerTurn();
+
+                    // testing if the names from the modal have been updated correctly
+                    console.log(game.playerOne);
+                    console.log(game.playerTwo);
                 }
 
                 // swapping player and validating activePlayer changed
@@ -254,6 +261,47 @@ function displayController() {
     // displaying the player name modal on page load
     window.addEventListener('DOMContentLoaded',() => {
         dialog.showModal();
+    });
+
+    // submitting the player name modal
+    submitNames.addEventListener('click', (e) => {
+        if (document.getElementById('player-one').value === "") {
+            playerOneName.textContent = "Player One"
+        } else {
+            playerOneName.textContent = document.getElementById('player-one').value;
+        };
+        if (document.getElementById('player-two').value === "") {
+            playerTwoName.textContent = "Player Two"
+        } else {
+            playerTwoName.textContent = document.getElementById('player-two').value;
+        }
+        setPlayerNames();
+        addPlayerNames.reset();
+        dialog.close();
+        e.preventDefault();
+    });
+
+    // updating the player names within the players array
+    const setPlayerNames = () => {
+        if (document.getElementById('player-one').value === "") {
+            game.playerOne.name = "Player One"
+        } else {
+            game.playerOne.name = document.getElementById('player-one').value;
+        };
+        if (document.getElementById('player-two').value === "") {
+            game.playerTwo.name = "Player Two"
+        } else {
+            game.playerTwo.name = document.getElementById('player-two').value;
+        }
+
+        
+        
+    }
+
+    // closing the player name modal without submitting
+    closeNames.addEventListener('click', (e) => {
+        dialog.close();
+        e.preventDefault();
     });
 
     // updating the scoreboard

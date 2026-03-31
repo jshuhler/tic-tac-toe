@@ -1,4 +1,4 @@
-// GAMEBOARD
+// ======= GAMEBOARD =======
 const gameBoard = (() => {
     const rows = 3;
     const columns = 3;
@@ -20,13 +20,13 @@ const gameBoard = (() => {
     return { board, printBoard };
 })();
 
-// PLAYER CREATION
+// ======= PLAYER CREATION =======
 const createPlayer = function makePlayer(name, marker) {
 
     return { name, marker };
 }
 
-// GAME CONTROLLER
+// ======= GAME CONTROLLER =======
 function gameController() { // removed `row,col,board` from parameters that weren't being used
     // player details
     const playerOne = createPlayer("Player One", "X");
@@ -113,33 +113,43 @@ function gameController() { // removed `row,col,board` from parameters that were
         };
     };
 
+    // resetting score back to 0
+    const resetScore = () => {
+        playerOneScore = 0;
+        playerTwoScore = 0;
+    }
+
     // getting the scores out of closure, this lets me work with both scores separately
     const getPlayerOneScore = () => playerOneScore;
     const getPlayerTwoScore = () => playerTwoScore;
 
-    // I don't think I need this, was just trying to not return SO MANY FUNCTIONS below
-    // const getPlayerScores = () => {
-    //     if (activePlayer === players[0]) {
-    //         return playerOneScore;
-    //     } else {
-    //         return playerTwoScore;
-    //     };
-    // };
-
-    return { players, playerOne, playerTwo, playerOneScore, playerTwoScore, playTurn, activePlayer, switchPlayerTurn, getActivePlayer, checkWinner, checkTie, incrementScore, getPlayerOneScore, getPlayerTwoScore };
+    return { 
+        players, 
+        playerOne, 
+        playerTwo, 
+        playerOneScore, 
+        playerTwoScore, 
+        playTurn, 
+        activePlayer, 
+        switchPlayerTurn, 
+        getActivePlayer, 
+        checkWinner, 
+        checkTie, 
+        incrementScore, 
+        getPlayerOneScore, 
+        getPlayerTwoScore,
+        resetScore,
+     };
 };
 
-
-
-// DISPLAY CONTROLLER
-
+// ======= DISPLAY CONTROLLER =======
 function displayController() {
     const game = gameController();
     const messageContainer = document.querySelector('.message-container');
     const gridContainer = document.querySelector('.grid-container');
     const clearContainer = document.querySelector('.clear-container');
     const gameMessage = document.createElement("div");
-    const scoreboard = document.querySelector('.score-container');
+    // const scoreboard = document.querySelector('.score-container');
     const playerOneName = document.getElementById("scoreboard-name1");
     const playerTwoName = document.getElementById("scoreboard-name2");
     let p1DisplayScore = document.getElementById("scoreboard-score1");
@@ -166,63 +176,67 @@ function displayController() {
 
     // event listener for the gridSpace clicks
     gridContainer.addEventListener('click', (e) => {
-        if (game.checkWinner() === true) {
-            return;
-        } else {
-            // testing
-            console.log(`before: ${game.checkWinner()}`);
-            
-                // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
-            if (e.target.textContent === "") {
-                e.target.textContent = game.getActivePlayer().marker;
-                // checking current values in console
-                console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
-                console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
-                console.log(gameBoard.board); // this is just checking the old board array from the console version
-                
-                // pushing the playerMarker of the selected gridSpace to the gameBoard array
-                gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
-
-                // testing
-                console.log(`after: ${game.checkWinner()}`);
-                
-                // checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
-                if (game.checkWinner() === true) {
-                    game.incrementScore();
-                    updateScoreboard();
-                    console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
-                    gameMessage.classList = "win-message";
-                    gameMessage.textContent = (`${game.getActivePlayer().name} wins!`);
-                    messageContainer.appendChild(gameMessage);
-                    clearBoard();                    
-                    // this lets the player who just lost go first if they play another round
-                    game.switchPlayerTurn();
-                    return;
-                } else if (game.checkTie() === true) {
-                    gameMessage.classList = "tie-message"; 
-                    gameMessage.textContent = (`Board's full! This one ends in a tie.`);
-                    messageContainer.appendChild(gameMessage);
-                    console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
-                    clearBoard();
-                } else {
-                    game.switchPlayerTurn();
-
-                    // testing if the names from the modal have been updated correctly
-                    console.log(game.playerOne);
-                    console.log(game.playerTwo);
-                }
-
-                // swapping player and validating activePlayer changed
-                console.log(`Current active player: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
-                console.log(`-----------------`);
-
-            } else {
-                // if the gridSpace being selected isn't blank, nothing happens
+        console.log(e.target.className);
+        if (e.target.className === "grid-space") {
+            if (game.checkWinner() === true) {
                 return;
+            } else {
+                // testing
+                console.log(`before: ${game.checkWinner()}`);
+                
+                    // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
+                if (e.target.textContent === "") {
+                    e.target.textContent = game.getActivePlayer().marker;
+                    // checking current values in console
+                    console.log(`Last turn taken by: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
+                    console.log(`Location selected: Row ${e.target.getAttribute("data-row")}, Col ${e.target.getAttribute("data-col")}`);
+                    console.log(gameBoard.board); // this is just checking the old board array from the console version
+                    
+                    // pushing the playerMarker of the selected gridSpace to the gameBoard array
+                    gameBoard.board[e.target.getAttribute("data-row")].splice(e.target.getAttribute("data-col"),1,game.getActivePlayer().marker);
+
+                    // testing
+                    console.log(`after: ${game.checkWinner()}`);
+                    
+                    // checking if there is a winner after the gameBoard has been updated before the activePlayer is swapped
+                    if (game.checkWinner() === true) {
+                        game.incrementScore();
+                        updateScoreboard();
+                        console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
+                        gameMessage.classList = "win-message";
+                        gameMessage.textContent = (`${game.getActivePlayer().name} wins!`);
+                        messageContainer.appendChild(gameMessage);
+                        clearBoard();                    
+                        // below lets the player who just lost go first if they play another round
+                        game.switchPlayerTurn();
+                        return;
+                    } else if (game.checkTie() === true) {
+                        gameMessage.classList = "tie-message"; 
+                        gameMessage.textContent = (`Board's full! This one ends in a tie.`);
+                        messageContainer.appendChild(gameMessage);
+                        console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
+                        clearBoard();
+                    } else {
+                        game.switchPlayerTurn();
+
+                        // testing if the names from the modal have been updated correctly
+                        console.log(game.playerOne);
+                        console.log(game.playerTwo);
+                    }
+
+                    // swapping player and validating activePlayer changed
+                    console.log(`Current active player: ${game.getActivePlayer().name}, playing with ${game.getActivePlayer().marker}`);
+                    console.log(`-----------------`);
+
+                } else {
+                    // if the gridSpace being selected isn't blank, nothing happens
+                    return;
+                };
             };
+        } else {
+            return;
         };
     });
-
 
     drawBoard(gameBoard.board);
 
@@ -266,12 +280,12 @@ function displayController() {
     // submitting the player name modal
     submitNames.addEventListener('click', (e) => {
         if (document.getElementById('player-one').value === "") {
-            playerOneName.textContent = "Player One"
+            playerOneName.textContent = "Player One";
         } else {
             playerOneName.textContent = document.getElementById('player-one').value;
         };
         if (document.getElementById('player-two').value === "") {
-            playerTwoName.textContent = "Player Two"
+            playerTwoName.textContent = "Player Two";
         } else {
             playerTwoName.textContent = document.getElementById('player-two').value;
         }
@@ -284,19 +298,16 @@ function displayController() {
     // updating the player names within the players array
     const setPlayerNames = () => {
         if (document.getElementById('player-one').value === "") {
-            game.playerOne.name = "Player One"
+            game.playerOne.name = "Player One";
         } else {
             game.playerOne.name = document.getElementById('player-one').value;
         };
         if (document.getElementById('player-two').value === "") {
-            game.playerTwo.name = "Player Two"
+            game.playerTwo.name = "Player Two";
         } else {
             game.playerTwo.name = document.getElementById('player-two').value;
-        }
-
-        
-        
-    }
+        }; 
+    };
 
     // closing the player name modal without submitting
     closeNames.addEventListener('click', (e) => {
@@ -311,7 +322,15 @@ function displayController() {
     };
 
     // full game reset
-
+    const resetButton = document.querySelector(".reset-game-button");
+    resetButton.addEventListener('click', () => {
+        game.resetScore();
+        updateScoreboard();
+        dialog.showModal();
+        // still needs:
+        // 1. reset active player
+        // 2. reset board
+    })
 
     // light & dark mode
     const setTheme = () => {

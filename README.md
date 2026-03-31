@@ -6,7 +6,7 @@ Creating a tic-tac-toe game for [The Odin Project's](https://www.theodinproject.
 ---------------------
 # outstanding issues/to do
 - [x] fix playing after a win has occurred
-- [ ] fix clicking on the grid freaking out (because of where the event listener is)
+- [x] fix clicking on the grid freaking out (because of where the event listener is)
 - [x] add a modal when page loads to take in player names
     - [x] names typed in update to scoreboard
     - [x] names typed in update to players object/arrays

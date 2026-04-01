@@ -89,6 +89,77 @@ a:hover {
 }
 
 /* ===================================
+   MODAL
+   =================================== */
+dialog {
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    margin: auto;
+    background-color: var(--card-color);
+    color: var(--link-color);
+}
+
+dialog legend {
+    font-size: var(--h2-font-size);
+    padding: 0 0 20px 0;
+    align-items: center;
+}
+
+dialog fieldset {
+    border: none;
+    padding: 0 0 20px 0 ;
+}
+
+.form-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+}
+
+dialog #form-read {
+    width: 50%;
+}
+
+label {
+    text-transform: uppercase;
+}
+
+input[type="text"],
+input[type="number"] {
+    margin: 0 0 20px 0;
+    padding: 5px;
+    font-weight: 300;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    font-size: var(--h3-font-size);
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 1px solid #0075fc;
+}
+
+dialog .modal-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+dialog button {
+    border-radius: var(--button-radius);
+    padding: 5px 12px;
+    border: solid 1px;
+    background-color: var(--button-color);
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(3px);
+}
+
+/* ===================================
    MAIN BODY CONTAINERS
    =================================== */
 .container {

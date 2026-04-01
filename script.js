@@ -271,9 +271,6 @@ function displayController() {
         });
         console.log("Play another round button was just clicked!");
         console.log(gameBoard.board);
-
-        // removing the gameMessage and clearButton
-
     };
 
     // displaying the player name modal on page load

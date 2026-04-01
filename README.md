@@ -15,4 +15,4 @@ Creating a tic-tac-toe game for [The Odin Project's](https://www.theodinproject.
 - [x] add support for players typing in their name
     - [x] add a button on the scoreboard that lets players type name in if they want, if they do, it replaces the names, resets the game fully, and then starts.
 - [x] add scoreboard
-- [ ] add full game reset button (takes you back to typing in names) vs play another round button
+- [x] add full game reset button (takes you back to typing in names) vs play another round button

@@ -322,6 +322,13 @@ function displayController() {
         p2DisplayScore.textContent = game.getPlayerTwoScore();
     };
 
+    // underlinning the active player on the scoreboard
+    const underlineActive = () => {
+        if (getActivePlayer() === game.playerOne) {
+            
+        }
+    }
+
     // full game reset
     const resetButton = document.querySelector(".reset-game-button");
     resetButton.addEventListener('click', () => {

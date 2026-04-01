@@ -149,7 +149,7 @@ function displayController() {
     const gridContainer = document.querySelector('.grid-container');
     const clearContainer = document.querySelector('.clear-container');
     const gameMessage = document.createElement("div");
-    // const scoreboard = document.querySelector('.score-container');
+    const clearButton = document.createElement("button");
     const playerOneName = document.getElementById("scoreboard-name1");
     const playerTwoName = document.getElementById("scoreboard-name2");
     let p1DisplayScore = document.getElementById("scoreboard-score1");
@@ -206,7 +206,7 @@ function displayController() {
                         gameMessage.classList = "win-message";
                         gameMessage.textContent = (`${game.getActivePlayer().name} wins!`);
                         messageContainer.appendChild(gameMessage);
-                        clearBoard();                    
+                        playRoundButton();                    
                         // below lets the player who just lost go first if they play another round
                         game.switchPlayerTurn();
                         return;
@@ -215,7 +215,7 @@ function displayController() {
                         gameMessage.textContent = (`Board's full! This one ends in a tie.`);
                         messageContainer.appendChild(gameMessage);
                         console.log(`Player 1: ${game.getPlayerOneScore()} // Player 2: ${game.getPlayerTwoScore()}`);
-                        clearBoard();
+                        playRoundButton();
                     } else {
                         game.switchPlayerTurn();
 
@@ -240,10 +240,8 @@ function displayController() {
 
     drawBoard(gameBoard.board);
 
-    // clearing the board button
-    const clearBoard = () => {
-        // creating the button
-        const clearButton = document.createElement("button");
+    // creating a play new round button and event listener
+    const playRoundButton = () => {
 
         clearButton.classList = "clear-grid-button";
         clearButton.textContent = "Play another round";
@@ -251,25 +249,31 @@ function displayController() {
 
         // the event listener to clear the board
         clearButton.addEventListener('click', (e) => {
-            // clearing the gameBoard array
-            for (let row = 0; row < gameBoard.board.length; row++) {
-                for (let col = 0; col < gameBoard.board[row].length; col++)
-                    // gameBoard.board[row].push(""); //change to push(col) to see col numbers in console
-                    gameBoard.board[row][col] = "";
-            };
-
-            // clearing the DOM gridSpaces
-            const gridSpaceAll = document.querySelectorAll('.grid-space');
-            gridSpaceAll.forEach(space => {
-                space.textContent = "";
-            });
-            console.log("Play another round button was just clicked!");
-            console.log(gameBoard.board);
-
-            // removing the gameMessage and clearButton
+            clearBoard();
             gameMessage.remove();
             clearButton.remove();
         });
+    };
+
+    // clearing the board button
+    const clearBoard = () => {        
+        // clearing the gameBoard array
+        for (let row = 0; row < gameBoard.board.length; row++) {
+            for (let col = 0; col < gameBoard.board[row].length; col++)
+                // gameBoard.board[row].push(""); //change to push(col) to see col numbers in console
+                gameBoard.board[row][col] = "";
+        };
+
+        // clearing the DOM gridSpaces
+        const gridSpaceAll = document.querySelectorAll('.grid-space');
+        gridSpaceAll.forEach(space => {
+            space.textContent = "";
+        });
+        console.log("Play another round button was just clicked!");
+        console.log(gameBoard.board);
+
+        // removing the gameMessage and clearButton
+
     };
 
     // displaying the player name modal on page load
@@ -326,10 +330,14 @@ function displayController() {
     resetButton.addEventListener('click', () => {
         game.resetScore();
         updateScoreboard();
+
+        if (game.getActivePlayer() === game.playerTwo) {
+            game.switchPlayerTurn();
+        };
+        clearBoard();
+        gameMessage.remove();
+        clearButton.remove();
         dialog.showModal();
-        // still needs:
-        // 1. reset active player
-        // 2. reset board
     })
 
     // light & dark mode
@@ -342,7 +350,7 @@ function displayController() {
     document.querySelector(".light-dark-mode").addEventListener('click', setTheme);
 
     // displayController returns
-    return { drawBoard, clearBoard };
+    return { drawBoard, clearBoard, playRoundButton };
 };
 
 const display = displayController();

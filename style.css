@@ -227,6 +227,11 @@ dialog::backdrop {
    color: #2a2a2a;
 }
 
+.active-player {
+   color: var(--link-color);
+   font-weight: 700;
+}
+
 .reset-game-button {
    cursor: pointer;
    border-radius: var(--button-radius);

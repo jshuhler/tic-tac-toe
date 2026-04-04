@@ -184,7 +184,7 @@ function displayController() {
                 // testing
                 console.log(`before: ${game.checkWinner()}`);
                 
-                    // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
+                // need to add a check that the space is blank and there is not a current winner, then reset the current winner when the board is reset later
                 if (e.target.textContent === "") {
                     e.target.textContent = game.getActivePlayer().marker;
                     // checking current values in console
@@ -209,6 +209,7 @@ function displayController() {
                         playRoundButton();                    
                         // below lets the player who just lost go first if they play another round
                         game.switchPlayerTurn();
+                        denoteActive();
                         return;
                     } else if (game.checkTie() === true) {
                         gameMessage.classList = "tie-message"; 
@@ -218,6 +219,7 @@ function displayController() {
                         playRoundButton();
                     } else {
                         game.switchPlayerTurn();
+                        denoteActive();
 
                         // testing if the names from the modal have been updated correctly
                         console.log(game.playerOne);
@@ -291,6 +293,7 @@ function displayController() {
             playerTwoName.textContent = document.getElementById('player-two').value;
         }
         setPlayerNames();
+        denoteActive();
         addPlayerNames.reset();
         dialog.close();
         e.preventDefault();
@@ -323,11 +326,15 @@ function displayController() {
     };
 
     // underlinning the active player on the scoreboard
-    const underlineActive = () => {
-        if (getActivePlayer() === game.playerOne) {
-            
-        }
-    }
+    const denoteActive = () => {
+        if (game.getActivePlayer() === game.playerOne) {
+            playerOneName.classList.add("active-player");
+            playerTwoName.classList.remove("active-player");
+        } else if (game.getActivePlayer() === game.playerTwo) {
+            playerTwoName.classList.add("active-player");
+            playerOneName.classList.remove("active-player");
+        };
+    };
 
     // full game reset
     const resetButton = document.querySelector(".reset-game-button");

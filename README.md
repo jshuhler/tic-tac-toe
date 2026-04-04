@@ -1,7 +1,16 @@
 # Tic-Tac-Toe
 Creating a tic-tac-toe game for [The Odin Project's](https://www.theodinproject.com/about) JavaScript course.
 
-## Tools Used
+[Live Preview](https://jshuhler.github.io/tic-tac-toe/)
+
+## Tools Used and Lessons Learned
+- Factory Functions 
+    - Lots of exposure to factory functions and learnings how to create objects on the fly. 
+- Closures and Variable Scoping
+    - This was the hardest part to wrap my head around and I spent a lot of time working through why various variables weren't available to me in places that I thought they should be. 
+    - Understanding that 
+- Organizing and readable code
+
 
 ---------------------
 # outstanding issues/to do
@@ -11,7 +20,7 @@ Creating a tic-tac-toe game for [The Odin Project's](https://www.theodinproject.
     - [x] names typed in update to scoreboard
     - [x] names typed in update to players object/arrays
 - [x] draw up new UI
-- [ ] show which player's turn it is on the page at all times
+- [x] show which player's turn it is on the page at all times
 - [x] add support for players typing in their name
     - [x] add a button on the scoreboard that lets players type name in if they want, if they do, it replaces the names, resets the game fully, and then starts.
 - [x] add scoreboard

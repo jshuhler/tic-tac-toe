@@ -26,12 +26,12 @@ body.dark-mode {
    --link-color: #c97f4a;
    --light-text-color: #2a2a2a;
    --dark-text-color: #e0e0e0;
-   --button-color: #5a5a5a;
+   --button-color: #e0e0e0;
    --button-border: 1px #000000 solid
 }
 
 :root {
-   --link-color: #2a2a2a;
+   --link-color: #c97f4a;
    --dark-text-color: #2a2a2a;
    --h1-font-size: 2em;
    --h2-font-size: 1.45em;
@@ -43,6 +43,7 @@ body.dark-mode {
    --box-shadow: 0px 4px 6px rbga(0,0,0,0.1);
    --body-color: #ffffff;
    --grid-color:#2a2a2a;
+   --button-color: #e0e0e0;
    --handwritten-font: 'Finger Paint', 'JetBrains Mono', monospace;
    --default-font:'JetBrains Mono', 'Finger Paint', monospace;
 }
@@ -97,67 +98,71 @@ a:hover {
    MODAL
    =================================== */
 dialog {
-    padding: 20px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    margin: auto;
-    background-color: var(--body-color);
-    color: var(--dark-text-color);
+   padding: 20px;
+   border: none;
+   border-radius: 10px;
+   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+   margin: auto;
+   background-color: #eeeeee;
+   color: var(--dark-text-color);
 }
 
 dialog legend {
-    font-size: var(--h2-font-size);
-    padding: 0 0 20px 0;
-    align-items: center;
+   font-size: var(--h2-font-size);
+   padding: 0 0 20px 0;
+   align-items: center;
+   color: var(--light-text-color);
+   text-align: center;
 }
 
 dialog fieldset {
-    border: none;
-    padding: 0 0 20px 0 ;
+   border: none;
+   padding: 0 0 20px 0 ;
 }
 
 .form-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: baseline;
+   width: 100%;
+   color: var(--light-text-color);
+
 }
 
 label {
-    text-transform: uppercase;
-    padding-right: 25px;
+   text-transform: uppercase;
+   padding-right: 25px;
 }
 
 input[type="text"] {
-    margin: 0 0 20px 0;
-    padding: 5px;
-    font-weight: 300;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #cccccc;
-    font-size: var(--h3-font-size);
+   margin: 0 0 20px 0;
+   padding: 5px;
+   font-weight: 300;
+   background: transparent;
+   border: none;
+   border-bottom: 1px solid #cccccc;
+   font-size: var(--h3-font-size);
 }
 
 input:focus {
-    outline: none;
-    border-bottom: 1px solid #0075fc;
+   outline: none;
+   border-bottom: 1px solid #0075fc;
 }
 
-dialog .modal-buttons {
-    display: flex;
-    justify-content: space-evenly;
+dialog .modal-button {
+   display: flex;
+   justify-content: space-evenly;
 }
 
 dialog button {
-    border-radius: var(--button-radius);
-    padding: 5px 12px;
-    border: solid 1px;
-    background-color: var(--button-color);
+   border-radius: var(--button-radius);
+   padding: 5px 12px;
+   border: solid 1px;
+   background-color: var(--button-color);
 }
 
 dialog::backdrop {
-    backdrop-filter: blur(3px);
+   backdrop-filter: blur(3px);
 }
 
 /* ===================================
@@ -197,6 +202,7 @@ dialog::backdrop {
 
 .score-title {
    font-size: var(--h2-font-size);
+   font-weight: bold;
    color: #2a2a2a;
    margin: 20px 0px;
 }
@@ -210,8 +216,8 @@ dialog::backdrop {
 }
 
 .name {
-   font-family: var(--handwritten-font);
-   font-size: var(--score-font-size);
+   font-family: var(--default-font);
+   font-size: var(--h3-font-size);
    color: #2a2a2a;
 }
 
@@ -228,7 +234,7 @@ dialog::backdrop {
    color: #2a2a2a;
    border: var(--button-border);
    margin: 20px 0px;
-   background-color: #e0e0e0;
+   background-color: var(--button-color);
    transition: all 0.2s ease-in-out;
 }
 
@@ -273,6 +279,7 @@ dialog::backdrop {
    border: var(--button-border);
    padding: 8px 16px;
    margin: 20px 0px;
+   background-color: var(--button-color);
 }
 
 /* ===================================

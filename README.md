@@ -5,23 +5,8 @@ Creating a tic-tac-toe game for [The Odin Project's](https://www.theodinproject.
 
 ## Tools Used and Lessons Learned
 - Factory Functions 
-    - Lots of exposure to factory functions and learnings how to create objects on the fly. 
+    - Lots of exposure to factory functions and learnings how to create objects with them. 
 - Closures and Variable Scoping
     - This was the hardest part to wrap my head around and I spent a lot of time working through why various variables weren't available to me in places that I thought they should be. 
-    - Understanding that 
 - Organizing and readable code
-
-
----------------------
-# outstanding issues/to do
-- [x] fix playing after a win has occurred
-- [x] fix clicking on the grid freaking out (because of where the event listener is)
-- [x] add a modal when page loads to take in player names
-    - [x] names typed in update to scoreboard
-    - [x] names typed in update to players object/arrays
-- [x] draw up new UI
-- [x] show which player's turn it is on the page at all times
-- [x] add support for players typing in their name
-    - [x] add a button on the scoreboard that lets players type name in if they want, if they do, it replaces the names, resets the game fully, and then starts.
-- [x] add scoreboard
-- [x] add full game reset button (takes you back to typing in names) vs play another round button
+    - Things were managable until I started transitioning from testing my logic in the consolve vs updaating a game board in the DOM. Putting together a much more robust plan with pseudocode would have made my life much, much easier I think. 

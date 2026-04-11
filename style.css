@@ -55,12 +55,12 @@ svg.light-dark-mode {
 }
 
 a {
-    color: var(--link-color);
+    color: var(--dark-text-color);
     text-decoration: none;
 }
 
 a:visited {
-    color: var(--link-color);
+    color: var(--dark-text-color);
 }
 
 a:hover {
@@ -72,26 +72,32 @@ a:hover {
    =================================== */
 .header {
    display: flex;
+   flex-wrap: wrap;
    width: 100vw;
    padding: 15px 0px;
    justify-content: center;
-   position: relative;
+   align-items: center;
 }
 
-.title {
+.header-left,
+.header-right {
+   width: 10%;
+   display: flex;
+   align-items: center;
+
+}
+
+.header .title {
    font-size: var(--h1-font-size);
    color: var(--dark-text-color);
    justify-self: center;
+   text-align: center;
+   width: 80%;
 }
 
 .header svg {
    height: var(--h1-font-size);
-   margin: 0 0 0 35px;
    fill: var(--dark-text-color);
-   position: absolute;
-   top: 50%;
-   right: 20px;
-   transform: translateY(-50%);
 }
 
 /* ===================================
@@ -213,6 +219,7 @@ dialog::backdrop {
    grid-template-rows: repeat(2, 1fr);
    grid-template-columns: 11fr 1fr;
    align-items: center;
+   width: 65%;
 }
 
 .name {
@@ -246,6 +253,14 @@ dialog::backdrop {
 .reset-game-button.hover {
    transform: translateY(-4px) translateX(-2px);
    box-shadow: 2px 5px 0 0 #2a2a2a;
+}
+
+#scoreboard-name1,
+#scoreboard-name2 {
+   display: grid;
+   overflow: hidden;
+   text-overflow: clip;
+   min-width: 0;
 }
    
 /* ===================================
